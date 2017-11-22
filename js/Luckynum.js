@@ -3,7 +3,7 @@
  * @author admin
  * @date 2017/11/21
  */
-class Luckynum{
+export class Luckynum{
 
     constructor(config){
         this._id=0;
@@ -19,7 +19,6 @@ class Luckynum{
         this._top=[];
         this.addHtml();
 
-       
         let start = document.getElementsByName('start')[0];
         start.addEventListener('click', () => {
             this.startRun()
@@ -99,7 +98,7 @@ class Luckynum{
             else
             {
                 if(this._speed[index]===4){
-                  console.log(index," get",this._top[index])
+                //  console.log(index," get",this._top[index])
                     this._check[index]=true
                     this._speed[index]=2
                     //console.log(this._speed[index])
@@ -161,6 +160,7 @@ class Luckynum{
                     }
                 ).length===3)
             {
+                console.log(this._luckNum)
                 console.log('reSet')
                 this.reSet()
                 this._run=false
