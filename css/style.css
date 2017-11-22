@@ -1,0 +1,62 @@
+#luckynum {
+    color: brown;
+    width: 800px;
+    height: 800px;
+   
+    
+    
+}
+.mac {
+   margin: 0 auto;
+    width: 636px;
+    height: 463px;
+    background-image: url("../imgs/mac.png");
+    position: relative;
+}
+img {
+    position: absolute;
+    top: -85px;
+}
+#img1 {
+
+}
+#img2 {
+
+}
+#img3 {
+}
+.btn {
+    position: absolute;
+    border-radius: 5px;
+    top:290px;
+    left: 128px;
+    width: 290px;
+    height: 90px;
+}
+.mask1 {
+    width: 126px;
+    height: 197px;
+    left: 63px;
+    top:58px;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 5px;
+}
+.mask2 {
+    width: 126px;
+    height: 197px;
+    left: 215px;
+    top:58px;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 5px;
+}
+.mask3 {
+    width: 126px;
+    height: 197px;
+    left: 367px;
+    top:58px;
+    overflow: hidden;
+    position: absolute;
+    border-radius: 5px;
+}
