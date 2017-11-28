@@ -1,7 +1,7 @@
 # 老虎机抽奖组件
-点击开始转动后，通过setNum(num)可以停在对应的位置
+点击开始转动后，通过setNum(num)可以停在对应的位置[演示地址](http://119.29.248.12:8080/Luckynum/index.html)
 ![Image text](imgs/test.gif)
-##使用方法
+## 使用方法
 引入css
 ```html
 <link href="css/style.css" rel="stylesheet" type="text/css">
@@ -12,7 +12,7 @@
 ```
 然后就可以在控制台使用Luckynum对象
 
-##传入参数说明
+## 传入参数说明
 ```js
 let obj={};
 obj.dom=document.getElementById('app');
@@ -43,7 +43,7 @@ obj.width='800px';
 obj.height='800px';
 obj.backgroudImg='imgs/mac.png';
 ```
-##Luckynum类说明
+## Luckynum类说明
 
 ```js
 constructor(config){} //构造函数,需要传入一个参数对象
