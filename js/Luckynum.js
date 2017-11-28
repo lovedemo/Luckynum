@@ -1,28 +1,42 @@
 /**
- * @file Luckynum
+// * @file Luckynum
  * @author admin
  * @date 2017/11/21
  */
 export class Luckynum{
 
     constructor(config){
-        this._topArr=[-1032,-912,-796,-678,-560,-440,-322,-204,-86,-1150];// 0-9数字对应的top值
-        this._myDom=config.dom; //传入dom
+
+        this._img=config.img;
+        this._myDom=config.dom;
+        this._width=config.width;
+        this._height=config.height;
+        this._backgroundImg=config.backgroudImg;
+        this._btn=config.btn;
+        this._imgWidth=config.img.width.split('px')[0];
+
+        this._topArr=[];// img对应的top值
         this._luckNum=[];  //抽奖结果
         this._speed=[]; //各个图片转动的速度
         this._flag=[]; // 每个图片是否已停止
+        this._timer=null; //超时计时器
 
         // 为实现慢慢停下来的效果 两次到达后才停下来
         this._check=[];
         this._checkAgain=[];
 
-
         this._run=false;// 数字转动后，让开始按钮不可触发
         this._top=[];// 当前图片所处位置
         this.addHtml();
+        this.getTopArr();
+        this.radomStart();
 
+        this._startHook=config.startHook||this.startHook;
+        this._endHook=config.endHook||this.endHook;
+
+        //console.log(this._topArr)
         //为按钮添加点击事件
-        let start = document.getElementsByName('start')[0];
+        let start = document.getElementById('start');
         start.addEventListener('click', () => {
             this.startRun();
         });
@@ -33,7 +47,8 @@ export class Luckynum{
     * */
     radomStart() {
         for(let i=0;i<3;i++){
-            document.getElementById('img'+(i+1)).style.top=this._topArr[Math.floor(Math.random()*10)]+'px';
+            document.getElementById('img'+(i+1)).style.top=this._topArr[Math.floor(Math.random()*this._img.url.length)]+'px';
+            //console.log(document.getElementById('img'+(i+1)).style.top);
         }
     }
 
@@ -43,6 +58,22 @@ export class Luckynum{
     **/
     setNum(num) {
         this._luckNum=(num+'').split('');
+        this._luckNum=this._luckNum.map(x=>{
+            return x-1;
+        })
+        let isRightNum=true;
+        this._luckNum.map(x=>{
+            if(x>=this._img.url.length)
+                isRightNum=false;
+        })
+        if(!isRightNum){
+            alert('错误的抽奖结果');
+            this._checkAgain=[true,true,true];
+            this._run=false;
+            clearTimeout(this._timer);
+            this._endHook('错误的抽奖结果');
+        }
+        //console.log(this._luckNum);
     }
 
     /*
@@ -50,16 +81,69 @@ export class Luckynum{
     *
     * */
     addHtml(){
+
         let div = document.createElement('div');
         div.setAttribute('id','luckynum');
-        div.innerHTML=`<div class="mac">
-                            <div class="mask1"><img id='img1' src="imgs/num.png"></div>
-                            <div class="mask2"><img id='img2' src="imgs/num.png"></div>
-                            <div class="mask3"><img id='img3' src="imgs/num.png"></div>
-                            <div class="btn" name="start"></div>
+        div.style.width=this._width;
+        div.style.height=this._height;
+        div.innerHTML=`<div class="content">
+                            <div class="mask " id="mask1"><div class='imgs' id='img1'></div></div>
+                            <div class="mask " id="mask2"><div class='imgs' id='img2'></div></div>
+                            <div class="mask " id="mask3"><div class='imgs' id='img3'></div></div>
+                            <div class="btn" id="start"></div>
                          </div>`;
         this._myDom.appendChild(div);
+
+        let content=document.getElementsByClassName('content')[0];
+        content.style.backgroundImage="url("+this._backgroundImg+")";
+        //console.log(content.style.backgroundImage)
+        let imgString='';
+        for (let i = 0; i < this._img.url.length; i++) {
+            imgString += '<img class="myimg" src="'+this._img.url[i]+'" />';
+
+        }
+        for (let i=1;i<=3;i++){
+            let img=document.getElementById('img'+i);
+            let mask=document.getElementById('mask'+i);
+            //img.style.height=mask.clientWidth.toString().split('px')[0]+'px';
+            //mask.style.left=10+25*(i-1)+'%';
+            mask.style.left=this._img.left[i-1];
+            mask.style.top=this._img.top;
+            mask.style.height=this._imgWidth*1.5+'px';
+            mask.style.width=this._imgWidth+'px';
+           // console.log( mask.style.height)
+            img.innerHTML=imgString+imgString;
+        }
+       let myimg=document.getElementsByClassName('myimg');
+        for(let m of myimg){
+            m.style.height=this._imgWidth+'px';
+           // console.log(m.style.height)
+        }
+
+        //生成btn
+        let btn=document.getElementById('start');
+        btn.style.backgroundImage='url('+this._btn.url+')';
+        btn.style.width=this._btn.width;
+        btn.style.height=this._btn.height;
+        btn.style.top=this._btn.top;
+        btn.style.left=this._btn.left;
         this.radomStart();
+    }
+
+    /**
+     *  计算结束的位置
+     *
+     **/
+    getTopArr(){
+
+       for(let i=1;i<this._img.url.length;i++){
+            // this._topArr[i]=-86+(-126*(i-1));
+           // 120 280
+            this._topArr[i]=-this._imgWidth*(i-0.25);
+       }
+       this._topArr[0]=this._topArr[this._img.url.length-1]-this._imgWidth;
+       this._topArr[this._img.url.length]=this._topArr[this._img.url.length-1]-this._imgWidth*2;
+
     }
     /**
     * 开始转动
@@ -69,16 +153,19 @@ export class Luckynum{
         if(!this._run) {
             this.reSet();
             console.log('start run')
+            this._startHook();
             this._run=true;
             this.runUp(0);
             this.runUp(1);
             this.runUp(2);
-            setTimeout(()=>{
+            this._timer= setTimeout(()=>{
                     if(this._luckNum.length===0)
                     {
                         this._checkAgain=[true,true,true];
                         alert('抽奖超时');
                         this._run=false;
+                        clearTimeout(this._timer);
+                        this._endHook('抽奖超时');
                        // this.radomStart();
                        // this.reSet();
 
@@ -120,8 +207,10 @@ export class Luckynum{
                     }
                 ).length===3)
             {
-                console.log(this._luckNum);
+                //console.log(this._luckNum);
                 console.log('reSet');
+                clearTimeout(this._timer);
+                this._endHook(this._luckNum.map(x=>{return ++x}));
                 this.reSet();
 
             }
@@ -145,11 +234,13 @@ export class Luckynum{
             this._checkAgain[index]=true;
         }
 
-        if(this._top[index]<=-1185){
-            this._top[index]=0;
+        if(this._top[index]<=this._topArr[this._img.url.length]){
+           // debugger
+            this._top[index]=-this._imgWidth*0.75;
         }
         img.style.top = this._top[index] + 'px';
         this._top[index] -= this._speed[index];
+        //console.log(this._luckNum[index],img.style.top)
     }
 
     /*
@@ -210,6 +301,15 @@ export class Luckynum{
         this._run=false;
         this._checkAgain=[]
 
+    }
+
+    startHook(){
+        console.log('默认startHook')
+        return 0;
+    }
+    endHook(){
+        console.log('默认endHook')
+        return 0;
     }
 }
 
