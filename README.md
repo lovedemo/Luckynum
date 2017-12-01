@@ -6,25 +6,24 @@
 ```html
 <link href="css/style.css" rel="stylesheet" type="text/css">
 ```
-使用require.js引入import.js
-``` html
-<script data-main="dist/js/import" src="js/require.js"></script>
-```
-然后就可以在控制台使用Luckynum对象
 
-## 传入参数说明
+## 使用示例
 ```js
+
+import{ Luckynum } from '../js/Luckynum'
+
+//配置传入参数
 let obj={};
 obj.dom=document.getElementById('app');
 obj.img={
     width:'160px',//转盘宽度
     left:['80px','280px','480px'],//3个转盘对应的位置
     top:'8%',//转盘与顶部的距离
-    url:['imgs/1.png','imgs/2.png','imgs/3.png','imgs/4.png','imgs/5.png','imgs/6.png'],//抽奖显示图片
+    url:['/static/imgs/1.png','/static/imgs/2.png','/static/imgs/3.png','/static/imgs/4.png','/static/imgs/5.png','/static/imgs/6.png'],//抽奖显示图片
 };
 //按钮的大小，位置和背景图
 obj.btn={
-    url:'imgs/btn.png',
+    url:'/static/imgs/btn.png',
     width:'400px',
     height:'100px',
     top:'48%',
@@ -41,7 +40,11 @@ obj.endHook=(res)=>{
 //整个抽奖组件的大小和背景图
 obj.width='800px';
 obj.height='800px';
-obj.backgroudImg='imgs/mac.png';
+obj.backgroudImg='/static/imgs/mac.png';
+let luckynum=new Luckynum(obj);
+
+//绑定到window方便演示
+window.luckynum=luckynum;
 ```
 ## Luckynum类说明
 
