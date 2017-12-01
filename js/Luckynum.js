@@ -36,7 +36,7 @@ export class Luckynum{
 
         //console.log(this._topArr)
         //为按钮添加点击事件
-        let start = document.getElementById('start');
+        let start = document.getElementById('luckynum-start');
         start.addEventListener('click', () => {
             this.startRun();
         });
@@ -47,7 +47,7 @@ export class Luckynum{
     * */
     radomStart() {
         for(let i=0;i<3;i++){
-            document.getElementById('img'+(i+1)).style.top=this._topArr[Math.floor(Math.random()*this._img.url.length)]+'px';
+            document.getElementById('luckynum-img'+(i+1)).style.top=this._topArr[Math.floor(Math.random()*this._img.url.length)]+'px';
             //console.log(document.getElementById('img'+(i+1)).style.top);
         }
     }
@@ -86,25 +86,25 @@ export class Luckynum{
         div.setAttribute('id','luckynum');
         div.style.width=this._width;
         div.style.height=this._height;
-        div.innerHTML=`<div class="content">
-                            <div class="mask " id="mask1"><div class='imgs' id='img1'></div></div>
-                            <div class="mask " id="mask2"><div class='imgs' id='img2'></div></div>
-                            <div class="mask " id="mask3"><div class='imgs' id='img3'></div></div>
-                            <div class="btn" id="start"></div>
+        div.innerHTML=`<div class="luckynum-content">
+                            <div class="luckynum-mask " id="luckynum-mask1"><div class='luckynum-imgs' id='luckynum-img1'></div></div>
+                            <div class="luckynum-mask " id="luckynum-mask2"><div class='luckynum-imgs' id='luckynum-img2'></div></div>
+                            <div class="luckynum-mask " id="luckynum-mask3"><div class='luckynum-imgs' id='luckynum-img3'></div></div>
+                            <div class="luckynum-btn" id="luckynum-start"></div>
                          </div>`;
         this._myDom.appendChild(div);
 
-        let content=document.getElementsByClassName('content')[0];
+        let content=document.getElementsByClassName('luckynum-content')[0];
         content.style.backgroundImage="url("+this._backgroundImg+")";
         //console.log(content.style.backgroundImage)
         let imgString='';
         for (let i = 0; i < this._img.url.length; i++) {
-            imgString += '<img class="myimg" src="'+this._img.url[i]+'" />';
+            imgString += '<img class="luckynum-myimg" src="'+this._img.url[i]+'" />';
 
         }
         for (let i=1;i<=3;i++){
-            let img=document.getElementById('img'+i);
-            let mask=document.getElementById('mask'+i);
+            let img=document.getElementById('luckynum-img'+i);
+            let mask=document.getElementById('luckynum-mask'+i);
             //img.style.height=mask.clientWidth.toString().split('px')[0]+'px';
             //mask.style.left=10+25*(i-1)+'%';
             mask.style.left=this._img.left[i-1];
@@ -114,14 +114,14 @@ export class Luckynum{
            // console.log( mask.style.height)
             img.innerHTML=imgString+imgString;
         }
-       let myimg=document.getElementsByClassName('myimg');
+       let myimg=document.getElementsByClassName('luckynum-myimg');
         for(let m of myimg){
             m.style.height=this._imgWidth+'px';
            // console.log(m.style.height)
         }
 
         //生成btn
-        let btn=document.getElementById('start');
+        let btn=document.getElementById('luckynum-start');
         btn.style.backgroundImage='url('+this._btn.url+')';
         btn.style.width=this._btn.width;
         btn.style.height=this._btn.height;
@@ -182,7 +182,7 @@ export class Luckynum{
     *
     * */
     runUp(index) {
-        let img=document.getElementById('img'+(index+1));
+        let img=document.getElementById('luckynum-img'+(index+1));
         this._top[index]= img.style.top.split('px')[0];
         this._speed[index] =10;
         this.runfun(img,index)

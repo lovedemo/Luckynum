@@ -1,8 +1,4 @@
-#luckynum {
-    /*width: 800px;*/
-    /*height: 800px;*/
-}
-.content {
+.luckynum-content {
    margin: 0 auto;
     width: 100%;
     height: 100%;
@@ -12,64 +8,23 @@
     font-size: 0;
 }
 img {
-  /*  width: 126px;
-    height: 126px;*/
     width: 100%;
 }
-.imgs {
+.luckynum-imgs {
     position: absolute;
 }
-/*#img1 {
-    position: absolute;
-}
-#img2 {
-    position: absolute;
-}
-#img3 {
-    position: absolute;
-}*/
-.btn {
+
+.luckynum-btn {
     position: absolute;
     border-radius: 5px;
     background-size: 100%,100%;
     background-repeat:no-repeat;
-    /*top:290px;
-    left: 128px;
-    width: 290px;
-    height: 90px;*/
+   
 }
-.mask {
-    /*width: 20%;*/
-    /*height: 35%;*/
+.luckynum-mask {
+    
     overflow: hidden;
     position: absolute;
     border-radius: 5px;
 }
-/*
-.mask1 {
-  !*  width: 126px;
-    height: 197px;*!
-    left: 63px;
-    top:58px;
-    overflow: hidden;
-    position: absolute;
-    border-radius: 5px;
-}
-.mask2 {
-   !* width: 126px;
-    height: 197px;*!
-    left: 215px;
-    top:58px;
-    overflow: hidden;
-    position: absolute;
-    border-radius: 5px;
-}
-.mask3 {
-    !*width: 126px;
-    height: 197px;*!
-    left: 367px;
-    top:58px;
-    overflow: hidden;
-    position: absolute;
-    border-radius: 5px;
-}*/
+
