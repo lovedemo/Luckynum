@@ -1,9 +1,18 @@
 {
-    "presets": [
-        "es2015"
-    ],
-    "plugins": [
-        ["transform-es2015-modules-amd", {"strict": false}],
-        "transform-decorators-legacy"
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [">0.5%", "last 2 versions", "not dead", "not ie <= 10", "not op_mini all"]
+        },
+        "loose": true,
+        "modules": false
+      }
     ]
+  ],
+  "plugins": [
+    ["transform-es2015-modules-amd", { "strict": false }],
+    "transform-decorators-legacy"
+  ]
 }
